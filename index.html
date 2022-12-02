@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GetSenha</title>
+</head>
+<body>
+<h1>Senha: <span id="senha"></span></h1>
+<hr>
+<h2>Ultimas senha chamadas</h2>
+<div id="ultimas-senhas"></div>
+<button>Iniciar</button>
+<audio id="xyz" src="sound.mp3" preload="auto"></audio>
+    
+<script>
+    var aux = 1;
+    var senha = document.getElementById('senha');
+
+    setInterval(async () => {
+        const res = await fetch("senhas.json");
+        const data = await res.json();
+        const resChamadas = await fetch("senhas-chamadas.json");
+        const dataChamadas = await resChamadas.json();
+        var len = Object.keys(dataChamadas).length;
+        
+        if(len > aux){
+            document.getElementById('xyz').play();
+            aux = len;
+        }
+        senha.innerHTML = dataChamadas[len];
+       
+    }, 3000);
+
+    
+   
+</script>
+</body>
+</html>
